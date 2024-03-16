@@ -5,6 +5,31 @@ body{
 body, button, input{
     font-family: sans-serif;
 }
+.d_flex{display: flex}
+@keyframes popupPushBoxAnim {
+    from{opacity: 0}
+    to{opacity: 1}
+}
+#popupPushBox{
+    animation: popupPushBoxAnim 500ms;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000e;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+#popupAppeal{
+    width: 50%;
+    padding: 10px;
+    background-color: #fffb;
+    border-radius: 5px;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
 #mainBox{
     min-width: 360px;
     width: 80%;
@@ -26,7 +51,7 @@ body, button, input{
     padding: 5px;
 }
 #bookNameInp:focus{outline: none;}
-#searchBtn{
+.btn_true{
     font-size: 16px;
     cursor: pointer;
     margin: 10px auto;
@@ -38,6 +63,18 @@ body, button, input{
     box-shadow: 0 0 4px #59b459;
     transition: 300ms;
 }
-#searchBtn:hover{
-    box-shadow: 3px 3px 10px #59b459;
+.btn_true:hover{box-shadow: 3px 3px 10px #59b459;}
+
+.btn_false{
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10px auto;
+    padding: 5px 10px;
+    font-weight: bold;
+    border: 0;
+    background: #b45959;
+    border-radius: 5px;
+    box-shadow: 0 0 4px #b45959;
+    transition: 300ms;
 }
+.btn_false:hover{box-shadow: 3px 3px 10px #b45959;}

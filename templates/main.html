@@ -9,10 +9,20 @@
     <link rel="stylesheet" href="{{ url_for('static', path='css/main.css') }}">
 </head>
 <body>
+    <div id="popupPushBox">
+        <div id="popupAppeal">
+            <h3>Данное приложение ищет книги по написанному названию из бесплатных источников.</h3>
+            <h3>Напишите название в строке и нажмите найти, после чего вы увидете все найденные книги которые можете читать через приложение или скачать на устройство.</h3>
+            <div class="d_flex">
+                <button class="btn_false">Больше не показывать</button>
+                <button class="btn_true">Закрыть</button>
+            </div>
+        </div>
+    </div>
     <div id="mainBox">
         <h3>Напишите название книги.</h3>
         <input type="text" id="bookNameInp" placeholder="Название">
-        <button id="searchBtn">Искать</button>
+        <button class="btn_true">Искать</button>
     </div>
 </body>
 </html>

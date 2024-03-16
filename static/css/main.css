@@ -1,0 +1,43 @@
+body{
+    background: #333;
+    margin: 0;
+}
+body, button, input{
+    font-family: sans-serif;
+}
+#mainBox{
+    min-width: 360px;
+    width: 80%;
+    padding: 10px;
+    background: rgba(255,255,255,0.1);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 5px;
+    color: #ddd;
+    display: grid;
+}
+#bookNameInp{
+    font-size: 17px;
+    border-radius: 5px;
+    border: 0;
+    background: rgba(255,255,255,.4);
+    padding: 5px;
+}
+#bookNameInp:focus{outline: none;}
+#searchBtn{
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10px auto;
+    padding: 5px 10px;
+    font-weight: bold;
+    border: 0;
+    background: #59b459;
+    border-radius: 5px;
+    box-shadow: 0 0 4px #59b459;
+    transition: 300ms;
+}
+#searchBtn:hover{
+    box-shadow: 3px 3px 10px #59b459;
+}

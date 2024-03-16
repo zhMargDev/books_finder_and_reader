@@ -14,8 +14,8 @@
             <h3>Данное приложение ищет книги по написанному названию из бесплатных источников.</h3>
             <h3>Напишите название в строке и нажмите найти, после чего вы увидете все найденные книги которые можете читать через приложение или скачать на устройство.</h3>
             <div class="d_flex">
-                <button class="btn_false">Больше не показывать</button>
-                <button class="btn_true">Закрыть</button>
+                <button class="btn_false" onclick="cloeAndBlock_popupAppeal(this)">Больше не показывать</button>
+                <button class="btn_true" onclick="close_popupAppeal(this)">Закрыть</button>
             </div>
         </div>
     </div>
@@ -24,5 +24,7 @@
         <input type="text" id="bookNameInp" placeholder="Название">
         <button class="btn_true">Искать</button>
     </div>
+
+    <script src="{{ url_for('static', path='js/main.js') }}"></script>
 </body>
 </html>

@@ -1,0 +1,3 @@
+fastapi
+fastapi-sessions
+jinja2

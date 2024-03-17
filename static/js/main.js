@@ -13,11 +13,11 @@ function checking_cookie(){
 }
 checking_cookie()
 
-async function close_popupAppeal(e){
+function close_popupAppeal(e){
     e.parentElement.parentElement.parentElement.remove(); //Remove id #popupPushBox
 }
 
-async function cloeAndBlock_popupAppeal(e){
+function cloeAndBlock_popupAppeal(e){
     close_popupAppeal(e); //Remove id #popupPushBox
 
     //Request to server for adding sessions so that the notification does not show anymore
@@ -37,3 +37,20 @@ async function cloeAndBlock_popupAppeal(e){
 
 }
 
+function searchBook(e){
+    const book_name = document.getElementById('bookNameInp').value;
+    // Search books by name
+    const xhr = new XMLHttpRequest();
+    //Request to server
+    xhr.open("POST", "/search_book");
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.onload = function() {
+        // If problem with server
+        if(xhr.status !== 200){
+            alert('Проблемы с сервером.')
+        }
+    };
+
+    xhr.send(JSON.stringify(book_name));
+}

@@ -22,7 +22,10 @@
     <div id="mainBox">
         <h3>Напишите название книги.</h3>
         <input type="text" id="bookNameInp" placeholder="Название">
-        <button class="btn_true">Искать</button>
+        <button class="btn_true" onclick="searchBook(this)">Искать</button>
+        <div id="booksBox">
+            <p>Результатов нету.</p>
+        </div>
     </div>
 
     <script src="{{ url_for('static', path='js/main.js') }}"></script>

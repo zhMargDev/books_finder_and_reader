@@ -1,8 +1,9 @@
-from fastapi import Cookie, FastAPI, Request, HTTPException, Depends, Header, Response
-from fastapi.responses import HTMLResponse
+from fastapi import FastAPI, Request, Response
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import RedirectResponse
+
+# Import main_core file
+import core.main_core as main_core
 
 
 app = FastAPI()
@@ -26,3 +27,11 @@ async def block_notification(request: Request):
         path="/",  # Make the cookie accessible from all paths on your domain
     )
     return response
+
+# Parser for search book from flibusta.site website
+@app.post("/search_book")
+async def search_book(request: Request):
+    books_name = await request.json()
+
+    response_data = main_core.Searching().search_books_by_name(books_name)
+    return True

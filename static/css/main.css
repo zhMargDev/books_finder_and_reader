@@ -1,9 +1,40 @@
 body{
     background: #333;
     margin: 0;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: inherit;
 }
 body, button, input{
     font-family: sans-serif;
+}
+#booksBox{
+    position: relative;
+}
+#backgroundFone{
+    background: #000d;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+#backImg{
+    width: 100%;
+    height: 100%;
+}
+@keyframes loadingAnimation {
+    0%{transform: rotate(0deg)}
+    100%{transform: rotate(359deg)}
+}
+#loading{
+    animation: loadingAnimation 1s linear infinite;
+    position: relative;
+    left: calc(50% - 35px);
+    width: 70px;
+    height: 70px;
 }
 .d_flex{display: flex}
 @keyframes popupPushBoxAnim {

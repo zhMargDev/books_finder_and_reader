@@ -11,7 +11,6 @@ class Searching:
     def search_books_by_name(self, books_name):
         # Searching all books from flibusta.site website
         response = requests.get(f"{self.website}ask={books_name}")
-        print(response.text)
 
-        return True
+        return response.text
 

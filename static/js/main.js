@@ -38,6 +38,8 @@ function cloeAndBlock_popupAppeal(e){
 }
 
 function searchBook(e){
+    document.getElementById('booksBoxText').style.display = 'none'; //Hide 'No resault' text
+    document.getElementById('loading').style.display = 'block'; // Show loading animated span
     const book_name = document.getElementById('bookNameInp').value;
     // Search books by name
     const xhr = new XMLHttpRequest();
@@ -47,7 +49,13 @@ function searchBook(e){
 
     xhr.onload = function() {
         // If problem with server
-        if(xhr.status !== 200){
+        if(xhr.status === 200){
+            const response = JSON.parse(xhr.responseText); //Take all books data
+            document.getElementById('loading').style.display = 'none'; // Hide loading animated span
+
+
+            console.log(response)
+        }else{
             alert('Проблемы с сервером.')
         }
     };

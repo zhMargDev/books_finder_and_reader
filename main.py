@@ -34,4 +34,5 @@ async def search_book(request: Request):
     books_name = await request.json()
 
     response_data = main_core.Searching().search_books_by_name(books_name)
-    return True
+
+    return response_data

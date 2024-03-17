@@ -33,6 +33,7 @@ async def block_notification(request: Request):
 async def search_book(request: Request):
     books_name = await request.json()
 
+    # Search and return finded books
     response_data = main_core.Searching().search_books_by_name(books_name)
 
     return response_data

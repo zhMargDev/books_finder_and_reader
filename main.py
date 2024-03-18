@@ -37,3 +37,13 @@ async def search_book(request: Request):
     response_data = main_core.Searching().search_books_by_name(books_name)
 
     return response_data
+
+#Search book by dict
+@app.post("/search_book_by_dict")
+async def search_book_by_dict(request: Request):
+    dict_name = await request.json()
+
+    # Search book by dict
+    response_data = main_core.Searching().search_books_by_dict(dict_name)
+
+    return response_data

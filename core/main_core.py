@@ -3,14 +3,14 @@ import requests
 from bs4 import BeautifulSoup
 
 class Searching:
-    website = "https://flibusta.site/booksearch?"
+    website = "https://flibusta.site"
 
     def __init__(self):
         pass
 
     def search_books_by_name(self, books_name):
         # Searching all books from flibusta.site website
-        html_content = requests.get(f"{self.website}ask={books_name}")
+        html_content = requests.get(f"{self.website}/booksearch?ask={books_name}")
 
         # Convert to BeautifulSoup object for to make it easier to work with html
         soup = BeautifulSoup(html_content.text, "html.parser")
@@ -50,6 +50,23 @@ class Searching:
                         break
 
             results.append(result_data)
+
+        return results
+
+    def search_books_by_dict(self, books_dict):
+        # Searching all books from flibusta.site website
+        html_content = requests.get(f"{self.website}{books_dict}")
+
+        # Convert to BeautifulSoup object for to make it easier to work with html
+        soup = BeautifulSoup(html_content.text, "html.parser")
+
+        # id=main this is the main part where all books are shown
+        books_finded_html = soup.find(id='main')
+
+        title = books_finded_html.find(class_='title')
+        print(title)
+
+        results = title.text
 
         return results
 

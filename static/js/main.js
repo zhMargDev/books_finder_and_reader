@@ -97,7 +97,29 @@ function searchBook(e){
 }
 
 function searchBookByDict(_href){
+    document.getElementById('booksBoxText').style.display = 'none'; //Hide 'No resault' text
+    document.getElementById('loading').style.display = 'block'; // Show loading animated span
+    document.getElementById('resaultBox').innerHTML = ''; //Remove old finded books list
+    // Search books by name
+    const xhr = new XMLHttpRequest();
+    //Request to server
+    xhr.open("POST", "/search_book_by_dict");
+    xhr.setRequestHeader("Content-Type", "application/json");
 
+    xhr.onload = function() {
+        // If problem with server
+        if(xhr.status === 200){
+            const response = JSON.parse(xhr.responseText); //Take all books data
+            document.getElementById('loading').style.display = 'none'; // Hide loading animated span
+
+            console.log(response)
+
+        }else{
+            alert('Проблемы с сервером.')
+        }
+    };
+
+    xhr.send(JSON.stringify(_href));
 }
 
 function viewBook(_href){

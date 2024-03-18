@@ -53,8 +53,8 @@ function searchBook(e){
             const response = JSON.parse(xhr.responseText); //Take all books data
             document.getElementById('loading').style.display = 'none'; // Hide loading animated span
 
-
             console.log(response)
+            document.getElementById('resaultBox').innerHTML = response;
         }else{
             alert('Проблемы с сервером.')
         }

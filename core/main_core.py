@@ -22,6 +22,22 @@ class Searching:
         for tag in books_finded_html.find_all(['div', 'form', 'h1', 'hr', 'br']):
             tag.extract()
 
-        # Return div with h3, ul and li -> title and books and autors
-        return books_finded_html.text
+        # Create a dictionary to store the separated HTML text
+        results = {
+            "h3": [],
+            "li": [],
+            "a": []
+        }
+
+        # Iterate over the found elements and extract the text and href for each tag
+        for h3 in books_finded_html.find_all("h3"):
+            results["h3"].append(h3.text)
+
+        for li in books_finded_html.find_all("li"):
+            results["li"].append(li.text)
+
+        for a in books_finded_html.find_all("a"):
+            results["a"].append({"text": a.text, "href": a.get("href")})
+
+        return results
 

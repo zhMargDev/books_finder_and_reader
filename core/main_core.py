@@ -37,14 +37,14 @@ class Searching:
                 if 'серии' in h3.text and 'книг' in li.text: #Append books series
                     for a in li.find_all('a'):
                         result_data['books'].append({
-                            'book_title': li.textm,
+                            'book_title': li.text,
                             'href': a.get("href")
                         })
                         break
                 elif 'книги' in h3.text and 'книг' not in li.text: # Append books
                     for a in li.find_all('a'):
                         result_data['books'].append({
-                            'book_title': li.textm,
+                            'book_title': li.text,
                             'href': a.get("href")
                         })
                         break

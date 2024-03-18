@@ -9,6 +9,7 @@ body{
 body, button, input{
     font-family: sans-serif;
 }
+ul{padding: 0 20px}
 #booksBox{
     position: relative;
 }
@@ -109,3 +110,42 @@ body, button, input{
     transition: 300ms;
 }
 .btn_false:hover{box-shadow: 3px 3px 10px #b45959;}
+
+@keyframes booksArrBoxShowAnimation {
+    from{max-height: 0}
+    to{max-height: 65vh}
+}
+#booksArrBox{
+    animation: booksArrBoxShowAnimation 500ms;
+    overflow: hidden;
+    overflow-y: scroll;
+    max-height: 65vh;
+}
+.booksSeriesButton{
+    cursor: pointer;
+    margin: 5px 0;
+    background: transparent;
+    color: #6f6ff5;
+    font-weight: bold;
+    font-size: 17px;
+    border: 3px solid;
+    padding: 5px;
+    border-radius: 5px;
+    transition: 300ms;
+    text-align: start;
+}
+.booksSeriesButton:hover{box-shadow: 2px 2px 7px #6f6ff5}
+.booksButton{
+    cursor: pointer;
+    margin: 5px 0;
+    background: transparent;
+    color: #5ac35a;
+    font-weight: bold;
+    font-size: 17px;
+    border: 3px solid;
+    padding: 5px;
+    border-radius: 5px;
+    transition: 300ms;
+    text-align: start;
+}
+.booksButton:hover{box-shadow: 2px 2px 7px #5ac35a}

@@ -23,21 +23,33 @@ class Searching:
             tag.extract()
 
         # Create a dictionary to store the separated HTML text
-        results = {
-            "h3": [],
-            "li": [],
-            "a": []
-        }
+        results = []
 
         # Iterate over the found elements and extract the text and href for each tag
         for h3 in books_finded_html.find_all("h3"):
-            results["h3"].append(h3.text)
+            result_data = {
+                'title': '',
+                'books': [],
+            }
+            result_data['title'] = h3.text
 
-        for li in books_finded_html.find_all("li"):
-            results["li"].append(li.text)
+            for li in books_finded_html.find_all("li"):
+                if 'серии' in h3.text and 'книг' in li.text: #Append books series
+                    for a in li.find_all('a'):
+                        result_data['books'].append({
+                            'book_title': li.textm,
+                            'href': a.get("href")
+                        })
+                        break
+                elif 'книги' in h3.text and 'книг' not in li.text: # Append books
+                    for a in li.find_all('a'):
+                        result_data['books'].append({
+                            'book_title': li.textm,
+                            'href': a.get("href")
+                        })
+                        break
 
-        for a in books_finded_html.find_all("a"):
-            results["a"].append({"text": a.text, "href": a.get("href")})
+            results.append(result_data)
 
         return results
 

@@ -56,7 +56,6 @@ class Searching:
     def search_books_by_dict(self, books_dict):
         # Searching all books from flibusta.site website
         html_content = requests.get(f"{self.website}{books_dict}")
-
         # Convert to BeautifulSoup object for to make it easier to work with html
         soup = BeautifulSoup(html_content.text, "html.parser")
 
@@ -64,9 +63,57 @@ class Searching:
         books_finded_html = soup.find(id='main')
 
         title = books_finded_html.find(class_='title')
-        print(title)
 
-        results = title.text
+        pages_count_html = books_finded_html.find(class_="pager") # Take pages if it not empty
+        pages = ['']
+        if pages_count_html is not None:
+            pages_a_tags = pages_count_html.find_all('a', href=lambda href: '?page' in href if href else False)
+            for a in pages_a_tags:
+                if a['href'] not in pages:
+                    pages.append(a['href'])
+        results = {}
+        books_data = []
+        for page in pages:
+            # this for is append to books_data all books from all pages, if page is not 1, it request for all pages and return that books
+            if page == '':
+                books_links = books_finded_html.find_all('a', href=lambda href: '/b/' in href if href else False)
 
+                # Access the link details (text, href, etc.)
+                for link in books_links:
+                    link_text = link['href']
+                    if link_text.count('/') == 2: # Checking if the link is book's reading link, and is not fb2, epub or other downloading link
+                        books_data.append({
+                            'text':link.text.strip(),# Get the text content of the anchor tag
+                            'href':link['href'],# Get the href attribute value
+                        })
+            else:
+                # If page is not '', find that page
+                # Searching all books from flibusta.site website
+                print(f"{self.website}{page}")
+                html_content = requests.get(f"{self.website}{page}")
+                # Convert to BeautifulSoup object for to make it easier to work with html
+                soup = BeautifulSoup(html_content.text, "html.parser")
+
+                # id=main this is the main part where all books are shown
+                books_finded_html = soup.find(id='main')
+
+                title = books_finded_html.find(class_='title')
+
+                books_links = books_finded_html.find_all('a', href=lambda href: '/b/' in href if href else False)
+
+                # Access the link details (text, href, etc.)
+                for link in books_links:
+                    link_text = link['href']
+                    if link_text.count(
+                            '/') == 2:  # Checking if the link is book's reading link, and is not fb2, epub or other downloading link
+                        books_data.append({
+                            'text': link.text.strip(),  # Get the text content of the anchor tag
+                            'href': link['href'],  # Get the href attribute value
+                        })
+
+        results = {
+            'title': title.text,
+            'books': books_data
+        }
         return results
 

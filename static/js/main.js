@@ -49,7 +49,7 @@ function searchBook(e){
     xhr.setRequestHeader("Content-Type", "application/json");
 
     xhr.onload = function() {
-        // If problem with server
+        // If server status is normal
         if(xhr.status === 200){
             const response = JSON.parse(xhr.responseText); //Take all books data
             document.getElementById('loading').style.display = 'none'; // Hide loading animated span
@@ -107,13 +107,29 @@ function searchBookByDict(_href){
     xhr.setRequestHeader("Content-Type", "application/json");
 
     xhr.onload = function() {
-        // If problem with server
+        // If server status is normal
         if(xhr.status === 200){
             const response = JSON.parse(xhr.responseText); //Take all books data
             document.getElementById('loading').style.display = 'none'; // Hide loading animated span
+            if(response.length !== 0){ // Checking if responsed data is not empty
+                // Create box
+                let books_arr_box_html = '<div id="booksArrBox">';
 
-            console.log(response)
+                books_arr_box_html += `<h3>`+ response['title'] +`</h3>`; //Set title
 
+                books_arr_box_html += '<ul>'; // Make ul dict
+                //Make books buttons
+                for (let i = 0 ; i < response['books'].length; i++){
+                    books_arr_box_html += `<li><button class="booksButton" onclick="viewBook('`+ response['books'][i]['href'] +`')">`+ response['books'][i]['text'] +`</button></li>`;
+                }
+
+                books_arr_box_html += '</ul>'; // Close ul dict
+                // Close main div
+                books_arr_box_html += '</div>';
+                document.getElementById('resaultBox').innerHTML = books_arr_box_html;
+            }else{ // If responset dat is empty
+                document.getElementById('booksBoxText').style.display = 'block'; //Show 'No resault' text
+            }
         }else{
             alert('Проблемы с сервером.')
         }
@@ -124,4 +140,5 @@ function searchBookByDict(_href){
 
 function viewBook(_href){
     // View book's Description
+
 }

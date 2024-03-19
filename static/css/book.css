@@ -1,0 +1,20 @@
+#book-container{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    width: 80%;
+    max-height: 90%;
+    min-width: 360px;
+    padding: 10px;
+    background: #fffa;
+    border-radius: 5px;
+    transform: translate(-50%, -50%);
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+description{display: none}
+title{display: block}
+binary{display: none}
+body{
+    background: #333;
+}

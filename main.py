@@ -1,9 +1,10 @@
-from fastapi import FastAPI, Request, Response
+from fastapi import FastAPI, Request, Response, HTTPException
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
-from lxml import etree # Fb2 reader
-from PyPDF2 import PdfReader # Pdf reader
 from starlette.responses import RedirectResponse
+from lxml import etree # fb2 reader
+from PyPDF2 import PdfReader # pdf reader
+
 
 # Import main_core file
 import core.main_core as main_core
@@ -21,38 +22,25 @@ async def root(request: Request):
 
 # Open book page, and if downloading url is not empty, download a book
 @app.get('/b/{book_id}/type={book_type}')
-async def book(request: Request, book_id: int, book_type: str):
-
+async def book(request: Request, book_id: str, book_type: str):
+    print(f'{book_id}.{book_type}')
     if book_type == 'download':  # If book is pdf
-        book_type_r = 'pdf'
-        try:
-            with open(f"/static/books/{book_id}.pdf", "rb") as f:
-                reader = PdfReader(f)
-                # Get number of pages (optional)
-                num_pages = len(reader.pages)
-                # Render the first page as an example
-                page = reader.pages[0]
-                html = page.extract_text()  # Extract text from the page
-            return templates.TemplateResponse("book.html", {"request": request, "book_html": html})
-        except FileNotFoundError:
-            # Handle the case where the PDF file is not found
-            return RedirectResponse(url="")
+        with open(f"static/books/{book_id}.pdf", "rb") as f:
+            reader = PdfReader(f)
+            # Get number of pages (optional)
+            num_pages = len(reader.pages)
+            # Render the first page as an example
+            page = reader.pages[0]
+            html = page.extract_text()  # Extract text from the page
+        return templates.TemplateResponse("book.html", {"request": request, "book_html": html})
 
     elif book_type == 'fb2':  # If book is fb2
-        book_type_r = 'fb2'
-        try:
-            with open(f"/static/books/{book_id}.{book_type}", "rb") as f:
-                print(True)
+        with open(f"static/books/{book_id}.{book_type}", "rb") as f:
+            tree = etree.parse(f)
+            html = etree.tostring(tree, method="html").decode("utf-8") # Decode xml to json file
+        return templates.TemplateResponse("book.html", {"request": request, "book_html": html})
 
-                tree = etree.parse(f)
-                html = etree.tostring(tree, method="html")
-            return templates.TemplateResponse("book.html", {"request": request, "book_html": html})
-        except FileNotFoundError:
-            # Handle the case where the FB2 file is not found
-            return RedirectResponse(url="")
 
-        # Handle invalid book types or other errors
-    return RedirectResponse(url="")
 
 # Request to server for adding sessions so that the notification does not show anymore
 @app.post("/block_notification")

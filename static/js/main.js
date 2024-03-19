@@ -140,5 +140,46 @@ function searchBookByDict(_href){
 
 function viewBook(_href){
     // View book's Description
+    document.getElementById('booksDescriptionBox').style.display = 'block'; //
+    // Search book by name
+    const xhr = new XMLHttpRequest();
+    //Request to server
+    xhr.open("POST", "/view_book_desc");
+    xhr.setRequestHeader("Content-Type", "application/json");
 
+    xhr.onload = function() {
+        // If server status is normal
+        if(xhr.status === 200){
+            const response = JSON.parse(xhr.responseText); //Take all books data
+            document.getElementById('loading').style.display = 'none'; // Hide loading animated span
+
+            if (response.length !== 0){ // If response not empty
+                let book_href = response['book_href']
+                let downloading_href = response['donwload']
+                let book_type = response['type']
+                document.getElementById('booksDescriptionBox').innerHTML = `
+                    <button id="bookDescCloseBtn" onclick="closeBookViewer()">X</button>
+                    <h2>`+ response['title'] +`</h2>
+                    <img src="`+ response['img'] +`" style="max-width: 400px; max-height: 400px">
+                    <p>`+ response['desc'] +`</p>
+                    <div class="d_flex">
+                    <button class="btn_true" onclick="window.location.href = '`+ book_href +`/type=`+ book_type +`'">Читать</button>
+                    <button class="btn_true" onclick="window.location.href = '`+ downloading_href +`'">Скачать</button>
+                    </div>
+                `;
+            }else{
+                document.getElementById('booksDescriptionBox').innerHTML = `<p>Книга не найдена.</p>`; // Add no result text
+                setTimeout(()=> {closeBookViewer()}, 1500) // Remove no result box
+            }
+        }else{
+            alert('Проблемы с сервером.')
+        }
+    };
+
+    xhr.send(JSON.stringify(_href));
+}
+
+function closeBookViewer(){
+    document.getElementById('booksDescriptionBox').innerHTML = '';
+    document.getElementById('booksDescriptionBox').style.display = 'none';
 }

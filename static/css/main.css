@@ -27,8 +27,8 @@ ul{padding: 0 20px}
     height: 100%;
 }
 @keyframes loadingAnimation {
-    0%{transform: rotate(0deg)}
-    100%{transform: rotate(359deg)}
+    0%{transform: rotate(359deg)}
+    100%{transform: rotate(0deg)}
 }
 #loading{
     animation: loadingAnimation 1s linear infinite;
@@ -149,3 +149,30 @@ ul{padding: 0 20px}
     text-align: start;
 }
 .booksButton:hover{box-shadow: 2px 2px 7px #5ac35a}
+
+#booksDescriptionBox{
+    max-width: 80%;
+    max-height: 80vh;
+    z-index: 20;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: #fffc;
+    border-radius: 5px;
+    padding: 10px;
+    display: none;
+    transition: 300ms;
+    overflow-y: scroll;
+    position: absolute;
+}
+#bookDescCloseBtn{
+    position: fixed;
+    right: 5px;
+    top: 5px;
+    background: #b45959;
+    font-weight: bold;
+    padding: 1px 6px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px;
+}

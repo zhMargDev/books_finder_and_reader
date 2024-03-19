@@ -1,6 +1,8 @@
 import requests
+import re
 
-from bs4 import BeautifulSoup
+from tqdm import tqdm # Library for downloading files from other url
+from bs4 import BeautifulSoup # Library for parsing html page from other flibusta.site
 
 class Searching:
     website = "https://flibusta.site"
@@ -116,4 +118,48 @@ class Searching:
             'books': books_data
         }
         return results
+
+    def view_book_desc(self, book_info):
+        # Searching all books from flibusta.site website
+        html_content = requests.get(f"{self.website}{book_info}")
+        # Convert to BeautifulSoup object for to make it easier to work with html
+        soup = BeautifulSoup(html_content.text, "html.parser")
+
+        # id=main this is the main part where all books are shown
+        book_html = soup.find(id='main')
+
+        book_name = book_html.find('h1', class_='title').text.strip() # Take booke name
+        pattern =  r"\(.*?\)"# Pattern for removing (fb2)
+        book_name = re.sub(pattern, "", book_name) # Remove (fb2) or (pdf)
+
+        # Try Necessary because the page may not have a book cover
+        try:
+            book_image = 'http://flibusta.site' + book_html.find('img', alt="Cover image")['src']
+        except:
+            book_image = ''
+
+        book_desc = book_html.find("h2", text="Аннотация").next_sibling.next_sibling.text # Find description <p> tag
+
+        #book_download_href = 'http://flibusta.site' + book_html.find('span', style="size").next_sibling.next_sibling['href'] # Book's downloading rl link
+        books_downloading_url = ''
+        all_a_tags = book_html.find_all('a')
+        for a_href in all_a_tags:
+            #Checking for the presence of a download button in pdf or fb2 format
+            if book_info in a_href['href'] and '/fb2' in a_href['href'] or book_info in a_href['href'] and '/pdf' in a_href['href'] or book_info in a_href['href'] and '/download' in a_href['href']:
+                books_downloading_url = 'http://flibusta.site' + a_href['href']
+                break # whene url is added
+
+        match = re.match(r".*/(.*)", books_downloading_url)
+        print(match.group(1))
+
+        book_information = {
+            'title': book_name,
+            'img':book_image,
+            'desc': book_desc,
+            'book_href':book_info,
+            'donwload':books_downloading_url,
+            'type':match.group(1)
+        }
+
+        return book_information
 

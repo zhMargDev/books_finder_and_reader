@@ -26,10 +26,14 @@
         <button class="btn_true" onclick="searchBook(this)">Искать</button>
         <div id="booksBox">
             <p id="booksBoxText">Результатов нету.</p>
-            <img id="loading" src="{{ url_for("static", path="img/loading.png") }}" style=" display: none;">
+            <img id="loading" src="{{ url_for("static", path="img/loading.png") }}" style=" display: none; filter: invert(1)">
             <div id="resaultBox"></div>
         </div>
     </div>
+
+    <nav id="booksDescriptionBox">
+        <img id="loading" src="{{ url_for("static", path="img/loading.png") }}" style=" display: block;">
+    </nav>
 
     <script src="{{ url_for('static', path='js/main.js') }}"></script>
 </body>
